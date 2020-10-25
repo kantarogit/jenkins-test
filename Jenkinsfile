@@ -24,8 +24,10 @@ pipeline {
         }
 
         stage('Approval') {
-            when{
-                env.ALL_FINE == false
+            when {
+                expression {
+                    return env.ALL_FINE == false
+                }
             }
             steps {
                 input 'All fine?'
