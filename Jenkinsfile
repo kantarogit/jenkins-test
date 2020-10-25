@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        cont = 'true'
+        cont = 'false'
     }
     stages {
 
