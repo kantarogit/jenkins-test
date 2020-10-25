@@ -12,8 +12,8 @@ pipeline {
                     try {
                         echo "Tests running..."
                         sh "exit 1"
-                    } catch (Error e) {
-                        echo 'error handling' + e
+                    } catch (e) {
+                        echo 'error handling'
                         env.cont = 'false'
                     }
                 }
