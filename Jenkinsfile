@@ -15,7 +15,10 @@ pipeline {
     post {
         failure {
             input 'All fine?'
-            currentBuild.result = 'SUCCESS'
+            steps {
+                currentBuild.result = 'SUCCESS'
+            }
+
         }
         success {
             echo "Success!"
