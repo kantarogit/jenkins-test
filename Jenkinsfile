@@ -8,26 +8,28 @@ pipeline {
 
         stage('Smoke') {
             steps {
-                try {
-                    echo "Tests running..."
-                    sh "exit 1"
-                } catch (Error e) {
-                    echo 'error handling' + e
-                    env.cont = false
+                script {
+                    try {
+                        echo "Tests running..."
+                        sh "exit 1"
+                    } catch (Error e) {
+                        echo 'error handling' + e
+                        env.cont = false
+                    }
                 }
             }
         }
 
         stage('Publish') {
             when {
-                env.cont == false
+                ${env.cont} == false
             }
-                steps {
-                    timeout(time: 60, unit: 'SECONDS') {
-                        input(message: 'Approve anyway')
-                    }
-                    currentBuild.result = 'SUCCESS'
+            steps {
+                timeout(time: 60, unit: 'SECONDS') {
+                    input(message: 'Approve anyway')
                 }
+                script { currentBuild.result = 'SUCCESS' }
+            }
 
         }
 
