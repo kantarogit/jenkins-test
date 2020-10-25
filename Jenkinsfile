@@ -6,7 +6,7 @@ pipeline {
 
         stage('Smoke') {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                catchError(stageResult: 'FAILURE') {
                     echo "Tests running..."
                     sh "exit 1"
                 }
