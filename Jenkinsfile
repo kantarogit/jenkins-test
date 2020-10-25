@@ -21,9 +21,7 @@ pipeline {
         }
 
         stage('Publish') {
-            when {
-                ${env.cont} == false
-            }
+            when { environment name: 'cont', value: false }
             steps {
                 timeout(time: 60, unit: 'SECONDS') {
                     input(message: 'Approve anyway')
