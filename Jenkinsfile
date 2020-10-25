@@ -10,15 +10,15 @@ pipeline {
                 sh 'exit 1'
             }
         }
-
-        post {
-            failure {
-                input 'All fine?'
-            }
-            success {
-                echo "Success!"
-            }
-        }
     }
 
+    post {
+        failure {
+            input 'All fine?'
+        }
+        success {
+            echo "Success!"
+        }
+    }
 }
+
