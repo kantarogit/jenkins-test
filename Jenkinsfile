@@ -14,8 +14,9 @@ pipeline {
     post {
         failure {
             input 'All fine?'
-            script { currentBuild.result = 'SUCCESS' }
+            echo 'approved'
 
+            script { currentBuild.buildResult = 'SUCCESS' }
 
         }
     }
