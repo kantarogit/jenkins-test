@@ -13,10 +13,9 @@ pipeline {
 
     post {
         failure {
-            steps {
-                input 'All fine?'
-//                script {currentBuild.result = 'SUCCESS'}
-            }
+            input 'All fine?'
+            script { currentBuild.result = 'SUCCESS' }
+
 
         }
     }
