@@ -17,18 +17,18 @@ pipeline {
                 }
             }
         }
-    }
 
-    stage('Publish') {
-        if (env.cont) {
-            steps {
-                timeout(time: 60, unit: 'SECONDS') {
-                    input(message: 'Approve anyway')
+        stage('Publish') {
+            if (env.cont) {
+                steps {
+                    timeout(time: 60, unit: 'SECONDS') {
+                        input(message: 'Approve anyway')
+                    }
+                    currentBuild.result = 'SUCCESS'
                 }
-                currentBuild.result = 'SUCCESS'
             }
         }
-    }
 
+    }
 }
 
