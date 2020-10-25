@@ -6,15 +6,17 @@ pipeline {
 
         stage('Smoke') {
             steps {
-                script {
-                    def myVariable = true
-                    echo "Running ${env.BUILD_ID} ---> ${env.BRANCH_NAME}"
-//                    if (Math.random() > 0.5)
-//                        myVariable = true
+                echo "Smoke tests running..."
+                sh 'exit 1'
+            }
+        }
 
-                    if (myVariable)
-                        input 'All good?'
-                }
+        post {
+            failure {
+                input 'All fine?'
+            }
+            success {
+                echo "Success!"
             }
         }
     }
