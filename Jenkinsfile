@@ -19,14 +19,16 @@ pipeline {
         }
 
         stage('Publish') {
-            if (env.cont) {
+            when {
+                env.cont == false
+            }
                 steps {
                     timeout(time: 60, unit: 'SECONDS') {
                         input(message: 'Approve anyway')
                     }
                     currentBuild.result = 'SUCCESS'
                 }
-            }
+
         }
 
     }
