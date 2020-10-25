@@ -1,30 +1,51 @@
 pipeline {
     agent any
 
+    environment {
+        ALL_FINE = true
+    }
+
 
     stages {
 
         stage('Smoke') {
             steps {
-                echo "Tests running..."
-                sh "exit 1"
-            }
-        }
-    }
-
-    post {
-        failure {
-            steps {
-                input 'All fine?'
                 script {
-                    currentBuild.result = 'SUCCESS'
+                    try {
+                        echo "Tests running..."
+                        sh "exit 1"
+                    }
+                    catch (Exception e) {
+                        echo e
+                        env.ALL_FINE = false
+                    }
                 }
             }
-
         }
-        success {
-            echo "Success!"
+
+        stage('Approval') {
+            when{
+                env.ALL_FINE == false
+            }
+            steps {
+                input 'All fine?'
+            }
         }
     }
+
+//    post {
+//        failure {
+//            steps {
+//                input 'All fine?'
+//                script {
+//                    currentBuild.result = 'SUCCESS'
+//                }
+//            }
+//
+//        }
+//        success {
+//            echo "Success!"
+//        }
+//    }
 }
 
