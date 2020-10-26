@@ -1,26 +1,30 @@
 pipeline {
     agent any
 
-//    environment {
-//        cont = 'false'
-//    }
     stages {
 
         stage('Smoke') {
             steps {
-                echo "Tests running..."
-                sh "exit 1"
-
+                script {
+                    try {
+                        echo "Tests running..."
+                        sh "exit 0"
+                    } catch (e) {
+                        env.failedStage = 'true'
+                    }
+                }
             }
         }
-    }
 
-    post {
-        failure {
-            script {
+        stage('QA Approval') {
+            when {
+                environment name: 'failedStage', value: 'true'
+            }
+
+            steps {
                 timeout(time: 60, unit: 'SECONDS') {
                     input(message: 'Approve anyway')
-                    currentBuild.result = 'SUCCESS'
+                    script {currentBuild.result = 'SUCCESS'}
                 }
             }
         }
